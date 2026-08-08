@@ -841,11 +841,21 @@ function uploadGambarDrive(e) {
     var file = folder.createFile(blob);
     file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
     
-    var fileUrl = "https://drive.google.com/thumbnail?id=" + file.getId() + "&sz=w1000";
+  var fileUrl = "https://lh3.googleusercontent.com/d/" + file.getId();
 
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheetSet = ss.getSheetByName('SETTING_RAPOR');
-    var dSet = sheetSet.getDataRange().getValues();
+var ss = SpreadsheetApp.getActiveSpreadsheet();
+var sheetSet = ss.getSheetByName('SETTING_RAPOR');
+
+// Terapkan pelindung ini agar fungsi upload bisa otomatis membuat sheet
+if (!sheetSet) {
+   sheetSet = ss.insertSheet('SETTING_RAPOR');
+   sheetSet.appendRow(['Kelas', 'Semester', 'Tahun', 'Tanggal', 'Wali', 'Kepala', 'URL Wali', 'URL Kepala', 'URL Stempel', 'Status Rilis']);
+}
+
+var dSet = sheetSet.getDataRange().getValues();
+
+var dSet = sheetSet.getDataRange().getValues();
+
     var rowIndex = -1;
     for(var i=1; i<dSet.length; i++) { if(dSet[i][0] == kelas) { rowIndex = i + 1; break; } }
 
