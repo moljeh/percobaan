@@ -112,40 +112,36 @@
             }
         };
 
-        function buatOsciKelasOtomatis() {
-            const selectKelas = document.getElementById('raporKelas');
-            if (!selectKelas) return;
-            
-            const kelasUnik = [...new Set(GLOBAL_DATA_SANTRI.map(s => s.kelas))]
-                                  .filter(kelas => {
-                                      if (!kelas) return false;
-                                      let kUpper = kelas.toUpperCase();
-                                      return kUpper.includes('IBT') || kUpper.includes('MI') || kUpper.includes('SD') || kUpper.includes('TK') || kUpper.includes('RA');
-                                  })
-                                  .sort();
+function buatOsciKelasOtomatis() {
+    const selectKelas = document.getElementById('raporKelas');
+    if (!selectKelas) return;
+    
+    // Filter HANYA untuk kelas Ibtidaiyah (IBT, MI, SD)
+    const kelasUnik = [...new Set(GLOBAL_DATA_SANTRI.map(s => s.kelas))]
+                          .filter(kelas => {
+                              if (!kelas) return false;
+                              let kUpper = kelas.toUpperCase();
+                              return kUpper.includes('IBT') || kUpper.includes('MI') || kUpper.includes('SD');
+                          })
+                          .sort();
 
-            selectKelas.innerHTML = '<option value="" disabled selected>-- Pilih Kelas Ibtidaiyah --</option>';
+    selectKelas.innerHTML = '<option value="" disabled selected>-- Pilih Kelas Ibtidaiyah --</option>';
 
-            let kelompok = {};
-            kelasUnik.forEach(k => {
-                let kU = k.toUpperCase();
-                let grup = kU.includes('TK') || kU.includes('RA') ? 'TK / RA' : 'IBTIDAIYAH';
-                if (!kelompok[grup]) kelompok[grup] = [];
-                kelompok[grup].push(k);
-            });
-
-            for (let [grupNama, daftarKelas] of Object.entries(kelompok)) {
-                let optgroup = document.createElement('optgroup');
-                optgroup.label = grupNama;
-                daftarKelas.forEach(kelas => {
-                    let option = document.createElement('option');
-                    option.value = kelas;
-                    option.textContent = kelas;
-                    optgroup.appendChild(option);
-                });
-                selectKelas.appendChild(optgroup);
-            }
-        }
+    // Buat satu grup saja khusus Ibtidaiyah
+    if (kelasUnik.length > 0) {
+        let optgroup = document.createElement('optgroup');
+        optgroup.label = 'IBTIDAIYAH';
+        
+        kelasUnik.forEach(kelas => {
+            let option = document.createElement('option');
+            option.value = kelas;
+            option.textContent = kelas;
+            optgroup.appendChild(option);
+        });
+        
+        selectKelas.appendChild(optgroup);
+    }
+}
 
         function populateSantriRapor() {
             const kelasPilih = document.getElementById('raporKelas').value;
