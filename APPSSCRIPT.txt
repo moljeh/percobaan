@@ -538,15 +538,15 @@ function getRankingKelas(e) {
   }
   
  var rankingList = [];
-  for (var key in agregasiRanking) {
+for (var key in agregasiRanking) {
      var r = agregasiRanking[key];
      if (kelasPilih.includes('TK')) {
-         r.rata = (r.total / r.hitungBaris).toFixed(1);
+         r.rata = (r.rata / r.hitungBaris).toFixed(1); // PERBAIKAN: Gunakan r.rata
      } else {
          r.rata = r.rata.toFixed(1); 
      }
      rankingList.push(r);
-  }
+}
   
   rankingList.sort(function(a, b) { 
       if (b.total !== a.total) {
@@ -621,12 +621,12 @@ function getBintangPelajar() {
         for (var key in agregasiKelas) {
             var r = agregasiKelas[key];
             if (kelasVal.includes('TK')) {
-                r.rata = r.hitungBaris > 0 ? (r.total / r.hitungBaris).toFixed(1) : 0;
+                r.rata = r.hitungBaris > 0 ? (r.rata / r.hitungBaris).toFixed(1) : 0; 
             } else {
                 r.rata = r.rata.toFixed(1);
             }
-            kelasRanking.push(r);
-        }
+            kelasRanking.push(r); // Menyimpan data ke dalam array kelasRanking
+        } // Menutup loop agregasiKelas
         
         kelasRanking.sort(function(a, b) { 
             if (b.total !== a.total) {
@@ -841,7 +841,7 @@ function uploadGambarDrive(e) {
     var file = folder.createFile(blob);
     file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
     
-  var fileUrl = "https://lh3.googleusercontent.com/d/" + file.getId();
+  var fileUrl = "https://drive.google.com/thumbnail?id=" + file.getId() + "&sz=w1000";
 
 var ss = SpreadsheetApp.getActiveSpreadsheet();
 var sheetSet = ss.getSheetByName('SETTING_RAPOR');

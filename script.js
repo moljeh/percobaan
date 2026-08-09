@@ -128,8 +128,7 @@ function showView(viewName, pushToHistory = true) {
         loadBintangPelajar(); 
     }
     
-    gantiMotivasiAcak();
-    if (viewName === 'home') { jalankanBannerOtomatis(); }
+
     
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
@@ -328,66 +327,13 @@ function logout() {
     }); 
 }
 
-// ---------------------------------------------------------
-// 4. KATA MOTIVASI ACAK
-// ---------------------------------------------------------
-const dataMotivasi = [
-    { judul: "Amal Jariyah Tanpa Batas", teks: "\"Sebaik-baik manusia adalah yang paling bermanfaat bagi manusia lainnya. Lelahmu dalam mendidik hari ini adalah benih amal jariyah yang pahalanya mengalir abadi.\"" },
-    { judul: "Pelita Kegelapan", teks: "\"Guru sejati adalah pelita di tengah kegelapan. Satu huruf yang kau ajarkan dengan ikhlas, bisa menjadi cahaya bagi masa depan seorang santri.\"" },
-    { judul: "Kesabaran Berbuah Surga", teks: "\"Mendidik butuh kesabaran ekstra. Ingatlah, setiap keringat dan kesabaranmu menghadapi santri akan dicatat sebagai ibadah di sisi Allah SWT.\"" },
-    { judul: "Pencetak Generasi Rabbani", teks: "\"Engkau bukan sekadar mentransfer ilmu, tapi sedang memahat jiwa dan akhlaq. Di tanganmulah generasi Rabbani masa depan dibentuk.\"" },
-    { judul: "Niatkan Karena Allah (Lillah)", teks: "\"Jadikan lelahmu menjadi Lillah. Tidak ada profesi yang lebih mulia dibandingkan mewariskan ilmu-ilmu kebaikan dan risalah kenabian.\"" },
-    { judul: "Doa Para Malaikat", teks: "\"Sesungguhnya Allah, para malaikat, hingga semut di lubangnya bershalawat dan mendoakan kebaikan bagi orang yang mengajarkan kebaikan kepada manusia.\"" },
-    { judul: "Pahlawan Tanpa Tanda Jasa", teks: "\"Namamu mungkin tak setenar tokoh dunia, tapi di langit, namamu harum karena lisan santri-santrimu yang melangitkan doa untukmu.\"" },
-    { judul: "Pewaris Para Nabi", teks: "\"Ulama dan guru adalah pewaris para nabi. Berbanggalah, karena jalan yang kau tempuh saat ini adalah jalan setapak menuju surga.\"" },
-    { judul: "Sentuhan Hati Terdalam", teks: "\"Nasihat yang keluar dari lisan mungkin hanya sampai di telinga, tapi didikan yang keluar dari hati akan menetap abadi di dalam sanubari santri.\"" },
-    { judul: "Mata Air Hikmah", teks: "\"Jadilah seperti mata air hikmah yang menyejukkan. Meskipun terkadang santri menguji kesabaran, tetaplah sirami mereka dengan kasih sayang.\"" },
-    { judul: "Mengangkat Derajat", teks: "\"Allah meninggikan derajat orang-orang yang berilmu. Engkau adalah jalan perantara bagi mereka untuk menggapai derajat yang mulia tersebut.\"" },
-    { judul: "Tinta Emas Sejarah", teks: "\"Tinta seorang guru lebih berat timbangannya dari darah syuhada. Teruslah menuliskan kebaikan di lembaran kertas kehidupan para santri.\"" },
-    { judul: "Arsitek Peradaban", teks: "\"Gedung tinggi bisa hancur, namun pondasi iman dan adab yang kau bangun di dada santrimu akan bertahan melintasi zaman.\"" },
-    { judul: "Adab Mendahului Ilmu", teks: "\"Tugas terberatmu bukanlah membuat mereka pintar matematika atau nahwu, melainkan membuat mereka memiliki adab yang luhur dan tawadhu.\"" },
-    { judul: "Kunci Pembuka Surga", teks: "\"Barangsiapa memudahkan jalan pencari ilmu, Allah mudahkan jalannya ke surga. Teruslah menjadi pembuka jalan kebaikan itu.\"" },
-    { judul: "Menyemai Cahaya Hidayah", teks: "\"Mungkin kau tak pernah tahu kalimat mana yang akhirnya mengubah hidup seorang murid. Tugasmu hanya terus menyemai benih kebaikan.\"" },
-    { judul: "Madrasah Pertama Kehidupan", teks: "\"Di madrasah inilah karakter dibentuk. Sambutlah para santri dengan senyum setiap pagi, karena senyummu mungkin adalah penyemangat utama mereka.\"" },
-    { judul: "Mahkota Cahaya Kemuliaan", teks: "\"Anak yang sholeh akan memberikan mahkota cahaya bagi orang tuanya. Dan engkaulah perantara terhebat yang mewujudkan hal itu.\"" },
-    { judul: "Sinergi Doa & Usaha", teks: "\"Mendidik bukan hanya soal teknik mengajar, tapi seberapa sering engkau menyebut nama murid-muridmu dalam sujud di sepertiga malam.\"" },
-    { judul: "Penghapus Kebodohan", teks: "\"Tidak ada sedekah yang lebih agung daripada menyedekahkan ilmu untuk menghapus tabir kebodohan dari umat manusia.\"" },
-    { judul: "Langkah Penuh Berkah", teks: "\"Setiap langkah kakimu dari rumah menuju Madrasah Darussalam adalah saksi bisu perjuanganmu menegakkan kalimat Allah.\"" },
-    { judul: "Keikhlasan Adalah Kunci", teks: "\"Hanya ilmu yang diajarkan dengan keikhlasan yang akan membuahkan kepahaman. Jaga selalu niat muliamu, wahai Ustadz/Ustadzah.\"" },
-    { judul: "Melukis Masa Depan", teks: "\"Papan tulis di kelasmu adalah kanvas, dan engkau adalah pelukisnya. Lukislah masa depan yang cerah untuk generasi Islam.\"" },
-    { judul: "Kekuatan Sebuah Keteladanan", teks: "\"Satu contoh keteladanan yang kau tunjukkan jauh lebih kuat pengaruhnya daripada seribu nasihat yang hanya diucapkan lisan.\"" },
-    { judul: "Senyum Pembawa Berkah", teks: "\"Wajah yang berseri dan senyum yang tulus saat masuk ke kelas adalah sedekah pertama yang kau berikan kepada santri-santrimu hari ini.\"" },
-    { judul: "Merawat Berlian Umat", teks: "\"Setiap santri adalah bongkahan berlian kasar. Tugas gurulah yang menggosoknya dengan ilmu dan adab hingga mereka berkilau terang.\"" },
-    { judul: "Tunas yang Akan Tumbuh", teks: "\"Jangan pernah berkecil hati jika hasil didikanmu belum terlihat. Engkau sedang menanam pohon jati yang butuh waktu untuk menjulang tinggi.\"" },
-    { judul: "Lentera Kesabaran", teks: "\"Terkadang kenakalan santri hanyalah cara mereka mencari perhatian. Jawablah dengan sabar, karena di sanalah letak ujian keikhlasanmu.\"" },
-    { judul: "Mewariskan Harta Terbaik", teks: "\"Harta yang kau wariskan akan habis dimakan zaman, tapi ilmu yang kau ajarkan akan abadi menjaga pemiliknya dari kehancuran.\"" },
-    { judul: "Menyelamatkan Masa Depan", teks: "\"Menyelamatkan satu jiwa dengan ilmu agama, sama nilainya dengan menyelamatkan masa depan seluruh umat manusia.\"" },
-    { judul: "Menepis Lelah dengan Ibadah", teks: "\"Ketika tumpukan nilai dan koreksian membuatmu lelah, tataplah wajah santrimu. Ingatlah bahwa mereka adalah kunci surgamu kelak.\"" },
-    { judul: "Menumbuhkan Sayap Kebaikan", teks: "\"Guru tidak memberikan sayap, tapi guru mengajari santri bagaimana cara mengepakkan sayap agar mereka bisa terbang meraih ridha-Nya.\"" },
-    { judul: "Satu Frekuensi Kebaikan", teks: "\"Tetaplah semangat bersinergi. Kesuksesan Madrasah Darussalam adalah hasil dari doa, dedikasi, dan kerja keras seluruh dewan guru.\"" }
-];
 
-function gantiMotivasiAcak() {
-    const wadahJudul = document.getElementById('judulMotivasi');
-    const wadahTeks = document.getElementById('teksMotivasi');
-    if (wadahJudul && wadahTeks) {
-        const acakIndex = Math.floor(Math.random() * dataMotivasi.length);
-        const dataTerpilih = dataMotivasi[acakIndex];
-        
-        wadahJudul.style.transition = "opacity 0.5s ease"; 
-        wadahTeks.style.transition = "opacity 0.5s ease";
-        wadahJudul.style.opacity = 0; 
-        wadahTeks.style.opacity = 0;
-        
-        setTimeout(() => {
-            wadahJudul.innerText = dataTerpilih.judul;
-            wadahTeks.innerText = dataTerpilih.teks; 
-            wadahJudul.style.opacity = 1; 
-            wadahTeks.style.opacity = 1;
-        }, 200);
-    }
-}
-document.addEventListener("DOMContentLoaded", gantiMotivasiAcak);
+
+
+
+
+
+
 
 // ---------------------------------------------------------
 // 5. PWA (PROGRESSIVE WEB APP)
@@ -1173,12 +1119,10 @@ function renderTabelDataNilai(headers, data) {
         let trBody = `<tr class="hover:bg-blue-50 transition-all">`; 
         trBody += `<td class="p-3 text-center text-gray-500 border-r border-gray-200">${rowIndex + 1}</td>`; 
         
-        let totalNilai = idxTotal > -1 ? parseFloat(row[idxTotal] || 0) : 0;
-        let rataBenar = "0.0";
-        if (kls && !kls.includes('TK')) {
-            let jmlMapel = (JADWAL_MAPEL[kls] && JADWAL_MAPEL[kls].semua) ? JADWAL_MAPEL[kls].semua.length : 0;
-            rataBenar = jmlMapel > 0 ? (totalNilai / jmlMapel).toFixed(1) : "0.0";
-        }
+let totalNilai = idxTotal > -1 ? parseFloat(row[idxTotal] || 0) : 0;
+// PERBAIKAN: Cari index kolom rata-rata dari server
+let idxRata = headers.findIndex(h => h.toLowerCase().includes('rata'));
+let rataBenar = idxRata > -1 ? parseFloat(row[idxRata] || 0).toFixed(1) : "0.0";
 
         row.forEach((cell, cellIndex) => { 
             const headerName = headers[cellIndex].toLowerCase(); 
@@ -1188,7 +1132,7 @@ function renderTabelDataNilai(headers, data) {
                 let textNIS = cell.toString().replace("'", ""); 
                 trBody += `<td class="p-3 border-r border-gray-200 text-gray-600 whitespace-nowrap">${escapeHTML(textNIS)}</td>`; 
             } else if (headerName.includes('rata')) {
-                let finalRata = kls.includes('TK') ? (!isNaN(parseFloat(cell)) ? parseFloat(cell).toFixed(1) : "0.0") : rataBenar;
+              let finalRata = !isNaN(parseFloat(cell)) ? parseFloat(cell).toFixed(1) : "0.0";
                 trBody += `<td class="p-3 border-r border-gray-200 text-center font-bold text-blue-600 whitespace-nowrap">${finalRata}</td>`;
                 GLOBAL_DATA_NILAI[rowIndex][cellIndex] = finalRata; 
             } else { 
@@ -2086,19 +2030,23 @@ function loadTabelMutasi() {
     const santriKelas = GLOBAL_DATA_SANTRI.filter(s => s.kelas === kelasAsal);
     
     if (santriKelas.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" class="p-8 text-center text-red-400 font-medium">Tidak ada santri di kelas ini.</td></tr>';
+        // PERBAIKAN: colspan menjadi 5
+        tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-red-400 font-medium">Tidak ada santri di kelas ini.</td></tr>';
         return;
     }
 
-    santriKelas.forEach((s) => {
+    // PERBAIKAN: Tambahkan parameter 'index' di forEach
+    santriKelas.forEach((s, index) => {
         tbody.innerHTML += `
             <tr class="hover:bg-indigo-50 transition-all cursor-pointer" onclick="const cb = this.querySelector('.cek-mutasi'); cb.checked = !cb.checked;">
                 <td class="p-3 text-center border-r border-gray-100" onclick="event.stopPropagation()">
                     <input type="checkbox" class="cek-mutasi w-4 h-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 cursor-pointer" value="${s.nis}">
                 </td>
-               <td class="p-3 text-gray-600 font-medium border-r border-gray-100">${escapeHTML(s.nis)}</td>
-<td class="p-3 font-bold text-gray-800 border-r border-gray-100">${escapeHTML(s.nama)}</td>
-<td class="p-3 text-center"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-semibold">${escapeHTML(s.kelas)}</span></td>
+                <!-- TAMBAHAN BARIS NOMOR URUT -->
+                <td class="p-3 text-center font-bold text-gray-500 border-r border-gray-100">${index + 1}</td>
+                <td class="p-3 text-gray-600 font-medium border-r border-gray-100">${escapeHTML(s.nis)}</td>
+                <td class="p-3 font-bold text-gray-800 border-r border-gray-100">${escapeHTML(s.nama)}</td>
+                <td class="p-3 text-center"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs font-semibold">${escapeHTML(s.kelas)}</span></td>
             </tr>
         `;
     });
@@ -2154,7 +2102,7 @@ function prosesMutasi() {
 
                     document.getElementById('mutasiKelasTujuan').value = '';
                     document.getElementById('text_mutasiKelasTujuan').innerText = '-- Pilih Tujuan --'; 
-                    document.getElementById('bodyTabelMutasi').innerHTML = '<tr><td colspan="4" class="p-8 text-center text-gray-400"><i class="fas fa-check-circle text-4xl mb-2 text-emerald-400 block"></i>Mutasi selesai.</td></tr>';
+                   document.getElementById('bodyTabelMutasi').innerHTML = '<tr><td colspan="5" class="p-8 text-center text-gray-400"><i class="fas fa-check-circle text-4xl mb-2 text-emerald-400 block"></i>Mutasi selesai.</td></tr>';
                     
                     loadDataSantri(); 
                 } else {
@@ -2239,72 +2187,6 @@ function tampilkanProfilDeveloper() {
     });
 }
 
-const dataMotivasiBanner = [
-    { judul: "Benih Kebaikan", teks: "\"Setiap ilmu yang kau ajarkan adalah bibit amal jariyah yang akan terus mengalirkan pahala, bahkan saat engkau telah tiada.\"" },
-    { judul: "Cahaya Ilmu", teks: "\"Jadilah lentera di tengah kegelapan, sebab satu kalimat hikmah yang kau sampaikan lebih berharga daripada dunia dan segala isinya.\"" },
-    { judul: "Pahlawan Senyap", teks: "\"Meski jasamu sering tak terlihat, ingatlah bahwa Allah Maha Melihat setiap tetes keringat yang jatuh demi mencerdaskan ummat.\"" },
-    { judul: "Ikhlas Mendidik", teks: "\"Bukan nominal yang menjadi tujuan, namun ridha Allah yang kau cari dalam setiap langkahmu memasuki ruang kelas setiap hari.\"" },
-    { judul: "Jalan Surga", teks: "\"Barangsiapa menempuh jalan untuk menuntut atau mengajarkan ilmu, maka Allah akan memudahkan baginya jalan menuju surga.\"" },
-    { judul: "Ladang Pahala", teks: "\"Jangan pernah mengeluh lelah, sebab setiap detik yang kau habiskan bersama murid-murid adalah investasi berharga di akhirat kelak.\"" },
-    { judul: "Sabar Tanpa Tepi", teks: "\"Hadapi kenakalan murid dengan kesabaran yang indah, karena itulah ujian yang akan mengangkat derajatmu setinggi-tingginya di sisi Allah.\"" },
-    { judul: "Hati Terpanggil", teks: "\"Panggilan jiwamu menjadi guru bukan sekadar profesi, melainkan amanah besar yang kelak akan dimintai pertanggungjawaban di hadapan-Nya.\"" },
-    { judul: "Pelita Ummat", teks: "\"Tugasmu mulia karena engkau sedang menjaga warisan para Nabi, yakni menyebarkan ilmu yang bermanfaat bagi kehidupan manusia.\"" },
-    { judul: "Tulus Mengabdi", teks: "\"Kemuliaan seorang guru terletak pada keikhlasan hati dalam berbakti, bukan pada pujian manusia maupun besaran materi yang diterima.\"" },
-    { judul: "Batu Bata", teks: "\"Setiap nasihat baik yang kau berikan adalah batu bata yang sedang kau susun untuk membangun peradaban Islam yang kokoh di masa depan.\"" },
-    { judul: "Kunci Hati", teks: "\"Ilmu akan sulit meresap ke dalam akal jika tidak disiram dengan keikhlasan hati. Dekati muridmu dengan kasih sayang, ajari dengan keteladanan.\"" },
-    { judul: "Pewaris Peradaban", teks: "\"Jangan bersedih saat dunia terasa sempit, karena tugasmu adalah mendidik calon-calon pemimpin ummat yang akan mendoakanmu kelak.\"" },
-    { judul: "Tetap Bersinar", teks: "\"Jaga semangatmu tetap menyala, karena engkau adalah sumber energi bagi murid-muridmu dalam menapaki jalan kebenaran.\"" },
-    { judul: "Bakti Murni", teks: "\"Mengajar adalah bentuk ibadah yang agung. Luruskan niatmu semata-mata karena Allah, maka lelahmu akan berganti menjadi berkah.\"" },
-    { judul: "Karsa Mulia", teks: "\"Niat tulusmu dalam mendidik adalah saksi bisu di hari kiamat nanti, bahwa engkau telah berusaha menjaga amanah-Nya sebaik mungkin.\"" },
-    { judul: "Benih Abadi", teks: "\"Apa yang kau tanam di pikiran dan hati muridmu hari ini, akan menjadi panen kebaikan yang terus dipetik hingga akhir zaman.\"" },
-    { judul: "Syukur Guru", teks: "\"Bersyukurlah karena tanganmu dipilih oleh Allah untuk membentuk karakter manusia. Itu adalah kehormatan yang tak dimiliki sembarang orang.\"" },
-    { judul: "Ujian Sabar", teks: "\"Di balik setiap kesulitan mendidik, ada pahala sabar yang sedang dicatat oleh malaikat. Jangan pernah menyerah, Allah bersamamu.\"" },
-    { judul: "Pemberi Harapan", teks: "\"Seringkali engkau adalah alasan seorang anak untuk terus bermimpi. Teruslah menjadi inspirasi yang membawa mereka dekat pada-Nya.\"" },
-    { judul: "Etos Kerja", teks: "\"Profesionalitasmu dalam mendidik adalah cerminan iman. Berikan yang terbaik, karena engkau sedang bekerja untuk Allah SWT.\"" },
-    { judul: "Cinta Ilmu", teks: "\"Mengajar adalah cara terbaik untuk terus belajar. Semakin engkau memberi, semakin Allah akan membukakan pintu hikmah untukmu.\"" },
-    { judul: "Jiwa Tangguh", teks: "\"Badai tantangan dalam mendidik tidak boleh mematahkan semangatmu, karena kekuatanmu bersumber dari pertolongan Allah yang Maha Kuat.\"" },
-    { judul: "Pendidik Sejati", teks: "\"Guru sejati adalah ia yang mendidik dengan cinta dan mengharap balasan hanya dari Allah, bukan dari manusia.\"" },
-    { judul: "Teguh Berdiri", teks: "\"Tetaplah teguh sebagai penunjuk jalan kebaikan, meski keadaan sulit, karena setiap huruf yang kau ajarkan adalah cahaya di dalam kubur.\"" },
-    { judul: "Senyum Ikhlas", teks: "\"Senyum ramahmu di depan kelas adalah sedekah. Ia mampu mencairkan hati murid yang keras dan membuka pintu hidayah.\"" },
-    { judul: "Tangan Berkah", teks: "\"Tangan yang digunakan untuk menuliskan ilmu dan membimbing murid adalah tangan yang didoakan keberkahan oleh penduduk langit dan bumi.\"" },
-    { judul: "Misi Suci", teks: "\"Engkau sedang berjuang mencetak generasi yang lebih baik dan lebih bertakwa dari generasimu. Teruskan perjuangan suci ini!\"" },
-    { judul: "Pendar Cahaya", teks: "\"Jadilah guru yang tidak hanya transfer materi, tapi juga transfer nilai-nilai iman yang akan membimbing mereka hingga akhirat.\"" },
-    { judul: "Dedikasi Hati", teks: "\"Keikhlasanmu adalah kunci keberkahan ilmu. Tanpanya, ilmu hanya akan menjadi pengetahuan, namun dengannya, ilmu menjadi hidayah.\"" },
-    { judul: "Amanah Mulia", teks: "\"Mendidik manusia adalah pekerjaan para Nabi. Sadarilah betapa mulia posisi yang sedang engkau tempati saat ini.\"" },
-    { judul: "Lelah Berkah", teks: "\"Lelahmu hari ini adalah saksi perjuangan di hari penghisaban. Tidurlah dengan tenang, Allah tidak menyia-nyiakan amal hambanya.\"" },
-    { judul: "Waktu Emas", teks: "\"Setiap waktu yang kau habiskan di dalam kelas adalah kesempatan untuk mengukir sejarah kebaikan dalam diri seseorang.\"" }
-];
-
-let timerBannerMotivasi; 
-let timeoutBannerTransisi; 
-
-function rotasiMotivasiBanner() {
-    const elJudul = document.getElementById('judulBanner');
-    const elTeks = document.getElementById('teksBanner');
-    
-    if (!elJudul || !elTeks) return;
-
-    clearTimeout(timeoutBannerTransisi);
-
-    elJudul.style.opacity = '0';
-    elTeks.style.opacity = '0';
-
-    timeoutBannerTransisi = setTimeout(() => {
-        const acak = Math.floor(Math.random() * dataMotivasiBanner.length);
-        
-        elJudul.innerText = dataMotivasiBanner[acak].judul;
-        elTeks.innerText = dataMotivasiBanner[acak].teks;
-        
-        elJudul.style.opacity = '1';
-        elTeks.style.opacity = '1';
-    }, 700); 
-}
-
-function jalankanBannerOtomatis() {
-    clearInterval(timerBannerMotivasi);
-    rotasiMotivasiBanner();
-    timerBannerMotivasi = setInterval(rotasiMotivasiBanner, 10000);
-}
 
 document.addEventListener("DOMContentLoaded", () => {
     if (sessionStorage.getItem('tokenMadasa')) {

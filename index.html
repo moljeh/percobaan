@@ -301,15 +301,15 @@
                     <div class="bg-gradient-to-r from-emerald-700 to-teal-800 rounded-2xl p-6 sm:p-8 text-white shadow-md mb-6 sm:mb-8 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6">
                         
    <div class="relative z-10 flex-1 flex flex-col items-center justify-center text-center w-full h-[200px] md:h-[160px]">
-    <h1 id="judulBanner" class="text-2xl sm:text-3xl font-heading font-bold transition-opacity duration-700 ease-in-out drop-shadow-sm">
-        Ahlan Wa Sahlan
-    </h1>
-    
-    <div class="h-[2px] w-full max-w-[280px] sm:max-w-[350px] my-3 sm:my-4 bg-gradient-to-r from-transparent via-emerald-300 to-transparent opacity-80"></div>
-    
-    <p id="teksBanner" class="text-emerald-100 text-sm sm:text-base font-medium italic transition-opacity duration-700 ease-in-out max-w-lg leading-relaxed">
-        Selamat datang di Sistem Informasi Penilaian Santri Digital.
-    </p>
+   <h1 class="text-2xl sm:text-3xl font-heading font-bold drop-shadow-sm">
+    Ahlan Wa Sahlan
+</h1>
+
+<div class="h-[2px] w-full max-w-[280px] sm:max-w-[350px] my-3 sm:my-4 bg-gradient-to-r from-transparent via-emerald-300 to-transparent opacity-80"></div>
+
+<p class="text-emerald-100 text-sm sm:text-base font-medium max-w-lg leading-relaxed">
+    Selamat datang di Sistem Informasi Penilaian Santri Digital.
+</p>
 </div>
 
                         <div class="relative z-10 bg-black/20 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center md:text-right min-w-[200px]">
@@ -947,25 +947,28 @@
                         </div>
 
                         <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm w-full">
-                            <table class="w-full text-left border-collapse min-w-max">
-                                <thead class="bg-gray-100 text-gray-600 text-xs uppercase border-b border-gray-200">
-                                    <tr>
-                                        <th class="p-3 text-center border-r border-gray-200 w-12">
-                                            <input type="checkbox" id="cekSemuaMutasi" onchange="toggleSemuaMutasi(this)" class="w-4 h-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 cursor-pointer">
-                                        </th>
-                                        <th class="p-3 border-r border-gray-200 w-24">NIS</th>
-                                        <th class="p-3 border-r border-gray-200">Nama Lengkap Santri</th>
-                                        <th class="p-3 text-center w-32">Kelas Saat Ini</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="bodyTabelMutasi" class="text-sm divide-y divide-gray-100 bg-white">
-                                    <tr>
-                                        <td colspan="4" class="p-8 text-center text-gray-400">
-                                            <i class="fas fa-users text-4xl mb-2 text-gray-200 block"></i>Silakan pilih Kelas Asal terlebih dahulu.
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                           <table class="w-full text-left border-collapse min-w-max">
+    <thead class="bg-gray-100 text-gray-600 text-xs uppercase border-b border-gray-200">
+        <tr>
+            <th class="p-3 text-center border-r border-gray-200 w-12">
+                <input type="checkbox" id="cekSemuaMutasi" onchange="toggleSemuaMutasi(this)" class="w-4 h-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 cursor-pointer">
+            </th>
+            <!-- TAMBAHAN KOLOM NOMOR -->
+            <th class="p-3 text-center border-r border-gray-200 w-12">No</th>
+            <th class="p-3 border-r border-gray-200 w-24">NIS</th>
+            <th class="p-3 border-r border-gray-200">Nama Lengkap Santri</th>
+            <th class="p-3 text-center w-32">Kelas Saat Ini</th>
+        </tr>
+    </thead>
+    <tbody id="bodyTabelMutasi" class="text-sm divide-y divide-gray-100 bg-white">
+        <tr>
+            <!-- UBAH COLSPAN MENJADI 5 -->
+            <td colspan="5" class="p-8 text-center text-gray-400">
+                <i class="fas fa-users text-4xl mb-2 text-gray-200 block"></i>Silakan pilih Kelas Asal terlebih dahulu.
+            </td>
+        </tr>
+    </tbody>
+</table>
                         </div>
 						
 						<!-- 🟢 TAMBAHKAN KODE INI DI SINI 🟢 -->
@@ -987,20 +990,7 @@
                     </div>
                 </div>
 
-                <div class="mt-6 sm:mt-8 relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-50 via-white to-teal-50 border border-emerald-100 p-6 sm:p-8 shadow-sm group hover:shadow-md transition-all">
-                    <i class="fas fa-quote-right absolute -bottom-4 -right-2 text-7xl text-emerald-100 opacity-50 group-hover:scale-110 group-hover:opacity-70 transition-all duration-500"></i>
-                    <div class="relative z-10 flex flex-col sm:flex-row items-center sm:items-start gap-5">
-                        <div class="w-14 h-14 shrink-0 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-md text-white text-xl transform rotate-3 group-hover:-rotate-3 transition-transform duration-300">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
-                        <div class="text-center sm:text-left flex-1 mt-1">
-                            <h4 id="judulMotivasi" class="text-emerald-800 font-heading font-bold text-lg mb-1.5">Memuat Motivasi...</h4>
-                            <p id="teksMotivasi" class="text-gray-600 text-sm sm:text-base italic leading-relaxed">
-                                "Silakan tunggu sebentar..."
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                
 
             </div> </main>
     </div> 
